@@ -75,14 +75,16 @@ tests/Feature/PageTest.php                  Pengujian otomatis
 php artisan test --filter=PageTest
 ```
 
-## Pengumpulan (slide 43)
+## Tangkapan Layar
 
-```bash
-git init
-git add .
-git commit -m "Tugas 4: portal akademik multi-view"
-git branch -M main
-git remote add origin https://github.com/<username>/<repo>.git
-git push -u origin main
-```
+### Beranda
+<img width="1916" height="914" alt="image" src="https://github.com/user-attachments/assets/589bcfbc-25b0-4427-a688-212075e49cb8" />
 
+### Profil Mahasiswa
+<img width="1919" height="913" alt="image" src="https://github.com/user-attachments/assets/5e341a66-da60-4ad2-b067-8149d323facf" />
+
+### Ide Riset
+<img width="1898" height="913" alt="image" src="https://github.com/user-attachments/assets/d5c6d374-7968-4ebe-b3d2-813f96554ac5" />
+
+### Mode Gelap
+<img width="1919" height="913" alt="image" src="https://github.com/user-attachments/assets/5a79da19-84ac-4218-bcb8-5bb2b3cf5076" />
