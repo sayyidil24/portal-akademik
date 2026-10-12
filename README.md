@@ -90,13 +90,6 @@ php artisan test --filter=PageTest
 <img width="1919" height="913" alt="image" src="https://github.com/user-attachments/assets/5a79da19-84ac-4218-bcb8-5bb2b3cf5076" />
 
 
- HEAD
-=======
-Pastikan `.gitignore` bawaan Laravel masih memuat `/vendor` dan `.env`. Cek dengan `git status`: keduanya tidak boleh muncul. Kirim link repo ke LMS ITS sebelum H-1.
-
-
----
-
 ## Tugas 6: Database Akademik (Migration, Model, Factory, Seeder)
 
 Tugas lanjutan: data portofolio kini disimpan di database MySQL, bukan lagi di variabel controller.
@@ -110,13 +103,6 @@ Tugas lanjutan: data portofolio kini disimpan di database MySQL, bukan lagi di v
 
 - Model `Project` memakai `$fillable` untuk melindungi dari mass-assignment. `user_id` sengaja tidak termasuk, sehingga pemilik project diisi lewat relasi dan tidak bisa dipalsukan dari input.
 - `api_key_secure` memakai cast `encrypted` dan disembunyikan lewat `$hidden`, jadi tidak muncul di array atau JSON.
-
-### Challenge
-
-- `ProjectFactory` menghasilkan ide proposal Agentic AI yang realistis.
-- `DatabaseSeeder` membuat 15 mahasiswa, masing-masing dengan 2 project, dan aman dijalankan ulang (tanpa error duplikasi).
-- Akun demo penguji: `dosenpbkk@its.ac.id` dengan password `password` (3 project siap presentasi).
-- Dashboard (`/dashboard`) hanya menampilkan project milik user yang login, terbaru lebih dulu.
 
 ### Setup Database Lokal
 
@@ -160,4 +146,9 @@ Jalankan aplikasi dengan `php artisan serve` dan `npm run dev`, lalu login di `/
 ```bash
 php artisan test --filter=ProjectDatabaseTest
 ```
->>>>>>> c882815 (Tugas 6: database akademik)
+Hasil php artisan migrate --seed
+<img width="814" height="125" alt="image" src="https://github.com/user-attachments/assets/e0162cbd-d2e8-4b64-85d8-7f9cf68a7261" />
+
+Isi tabel users
+<img width="1871" height="593" alt="image" src="https://github.com/user-attachments/assets/09f33d85-47f9-4b71-a851-6fc50f33605c" />
+
