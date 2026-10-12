@@ -1,4 +1,4 @@
-# Tugas 4: Portal Akademik Multi-View 
+# Portal Akademik Multi-View 
 
 ## Identitas
 
@@ -88,3 +88,5 @@ php artisan test --filter=PageTest
 
 ### Mode Gelap
 <img width="1919" height="913" alt="image" src="https://github.com/user-attachments/assets/5a79da19-84ac-4218-bcb8-5bb2b3cf5076" />
+
+
