@@ -1,5 +1,4 @@
-@extends('layouts.app')
-
+@extends('layouts.portal')
 @section('title', 'Beranda')
 
 @section('konten')
@@ -10,9 +9,9 @@
         </x-status-banner>
     @endif
 
-    <section class="mb-8 rounded-xl bg-white p-8 shadow-sm dark:bg-slate-800">
+    <section class="mb-8 rounded-xl bg-white p-8 shadow-sm">
         <h1 class="text-3xl font-bold">Portal Akademik Mahasiswa</h1>
-        <p class="mt-2 text-slate-600 dark:text-slate-300">
+        <p class="mt-2 text-slate-600">
             Mini-website untuk profil diri dan rancangan platform Agentic AI kelompok.
         </p>
     </section>
@@ -22,7 +21,7 @@
             <a href="{{ route($f['rute'], request()->only('mode')) }}" class="block">
                 <x-info-card :judul="'Menu ' . $loop->iteration" class="h-full transition hover:shadow-md">
                     {{ $f['judul'] }}
-                    <span class="mt-1 block text-sm font-normal text-slate-500 dark:text-slate-400">{{ $f['deskripsi'] }}</span>
+                    <span class="mt-1 block text-sm font-normal text-slate-500">{{ $f['deskripsi'] }}</span>
                 </x-info-card>
             </a>
         @endforeach

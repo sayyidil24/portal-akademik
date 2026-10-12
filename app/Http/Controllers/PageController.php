@@ -67,14 +67,14 @@ class PageController extends Controller
     {
         $data = $request->validate([
             'nama' => ['required', 'string', 'max:100'],
-            'ide'  => ['required', 'string', 'min:10', 'max:1000'],
+            'ide' => ['required', 'string', 'min:10', 'max:1000'],
             'mode' => ['nullable', 'in:light,dark'],
         ], [
             'nama.required' => 'Nama wajib diisi.',
-            'nama.max'      => 'Nama maksimal :max karakter.',
-            'ide.required'  => 'Ide riset wajib diisi.',
-            'ide.min'       => 'Ide riset minimal :min karakter.',
-            'ide.max'       => 'Ide riset maksimal :max karakter.',
+            'nama.max' => 'Nama maksimal :max karakter.',
+            'ide.required' => 'Ide riset wajib diisi.',
+            'ide.min' => 'Ide riset minimal :min karakter.',
+            'ide.max' => 'Ide riset maksimal :max karakter.',
         ]);
 
         // Pertahankan mode gelap setelah redirect

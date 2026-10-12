@@ -1,22 +1,21 @@
-@extends('layouts.app')
-
+@extends('layouts.portal')
 @section('title', 'Ide Riset Agentic AI')
 
 @section('konten')
     <h1 class="mb-2 text-2xl font-bold">Ide Riset: Platform Agentic AI</h1>
-    <p class="mb-6 text-slate-600 dark:text-slate-300">
+    <p class="mb-6 text-slate-600">
         Rancangan alur kerja platform agen AI yang diusulkan kelompok.
     </p>
 
     {{-- Visualisasi rancangan platform --}}
     <ol class="mb-10 grid gap-3 md:grid-cols-4">
         @foreach ($alur as $langkah)
-            <li class="rounded-lg border border-teal-500 bg-white p-4 shadow-sm dark:bg-slate-800">
+            <li class="rounded-lg border border-teal-500 bg-white p-4 shadow-sm">
                 <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-teal-600 text-sm font-bold text-white">
                     {{ $loop->iteration }}
                 </span>
                 <h3 class="mt-2 font-semibold">{{ $langkah['judul'] }}</h3>
-                <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">{{ $langkah['deskripsi'] }}</p>
+                <p class="mt-1 text-sm text-slate-600">{{ $langkah['deskripsi'] }}</p>
             </li>
         @endforeach
     </ol>
@@ -39,20 +38,20 @@
 
     <h2 class="mb-3 text-xl font-semibold">Kirim Ide Baru</h2>
     <form method="POST" action="{{ route('ide-agent.kirim') }}"
-          class="space-y-4 rounded-xl bg-white p-6 shadow-sm dark:bg-slate-800">
+          class="space-y-4 rounded-xl bg-white p-6 shadow-sm">
         @csrf
         <input type="hidden" name="mode" value="{{ $mode }}">
 
         <div>
             <label for="nama" class="mb-1 block text-sm font-medium">Nama</label>
             <input type="text" id="nama" name="nama" value="{{ old('nama') }}"
-                   class="w-full rounded-md border border-slate-300 bg-white px-3 py-2 dark:border-slate-600 dark:bg-slate-700">
+                   class="w-full rounded-md border border-slate-300 bg-white px-3 py-2">
         </div>
 
         <div>
             <label for="ide" class="mb-1 block text-sm font-medium">Ide Riset</label>
             <textarea id="ide" name="ide" rows="4"
-                      class="w-full rounded-md border border-slate-300 bg-white px-3 py-2 dark:border-slate-600 dark:bg-slate-700">{{ old('ide') }}</textarea>
+                      class="w-full rounded-md border border-slate-300 bg-white px-3 py-2">{{ old('ide') }}</textarea>
         </div>
 
         <button type="submit" class="rounded-md bg-teal-600 px-4 py-2 font-medium text-white hover:bg-teal-700">
