@@ -152,3 +152,51 @@ Hasil php artisan migrate --seed
 Isi tabel users
 <img width="1871" height="593" alt="image" src="https://github.com/user-attachments/assets/09f33d85-47f9-4b71-a851-6fc50f33605c" />
 
+## Tugas 10: Dashboard Admin dan RBAC (AdminLTE + Spatie Permission)
+
+### Fitur
+
+- **Panel admin AdminLTE** di `/admin/dashboard` (layout `@extends('adminlte::page')`), dilindungi login Laravel Breeze.
+- **RBAC Spatie Laravel Permission** dengan dua peran: `Admin` (akses penuh) dan `Staf` (hanya melihat). Peran dan izin tersimpan di tabel database Spatie.
+- **4 widget statistik dinamis** dari kueri `count()`: Total User, Total Project, Pengelola Panel, dan Project 7 Hari Terakhir.
+- **Hak eksklusif Admin:** tombol Hapus dan menu Hapus Data hanya dirender untuk `Admin` (`@role('Admin')`, filter `can` di sidebar). Eksekusinya dijaga di controller lewat middleware `permission:hapus-data` dan pengecekan peran di method `destroy`.
+- **Pencarian dan filter** `when()` pada tabel project, dengan `withQueryString()` agar kata kunci tidak hilang saat pindah halaman.
+- **Seeder Faker realistis:** 33 project dan 18 user tersedia otomatis lewat `php artisan migrate --seed`.
+- **Login instan akun uji** di halaman login (hanya muncul saat `APP_ENV=local`).
+
+### Akun Uji (password semua akun: `password`)
+
+| Peran | Email | Akses |
+|---|---|---|
+| Admin | `admin@its.ac.id` | Panel admin, lihat dan hapus data |
+| Admin | `dosenpbkk@its.ac.id` | Sama seperti Admin |
+| Staf | `staf@its.ac.id` | Panel admin, hanya lihat data (tombol hapus tidak muncul, aksi hapus ditolak 403) |
+| Tanpa peran | `mahasiswa1@student.its.ac.id` | Hanya dashboard mahasiswa, `/admin` ditolak 403 |
+
+Buat database `portal_akademik` di MySQL dan atur `.env` (`DB_CONNECTION=mysql`, `DB_DATABASE=portal_akademik`, `DB_USERNAME=root`, `DB_PASSWORD=`, `SESSION_DRIVER=file`), lalu:
+
+```bash
+php artisan migrate --seed
+php artisan serve
+npm run dev
+```
+
+Aset AdminLTE ikut disimpan di `public/vendor`. Jika tampilan panel admin tanpa gaya, jalankan `php artisan adminlte:install --only=assets`.
+
+### Tangkapan Layar
+
+1. Dashborad Admin
+<img width="1902" height="912" alt="image" src="https://github.com/user-attachments/assets/f91a5507-16ce-4188-a3ef-e22df6bfac38" />
+
+2. Tabel Project
+<img width="1892" height="915" alt="image" src="https://github.com/user-attachments/assets/755c4b03-37ae-4809-ad6e-fd9afe747299" />
+
+### Pengujian
+
+php artisan test
+
+<img width="1421" height="277" alt="image" src="https://github.com/user-attachments/assets/7d4d81e7-0e32-4490-a6b5-666099e4ae38" />
+<img width="1461" height="706" alt="image" src="https://github.com/user-attachments/assets/5f07c40c-e1b7-402f-93e5-2a31c8042a36" />
+
+
+
