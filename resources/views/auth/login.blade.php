@@ -44,4 +44,5 @@
             </x-primary-button>
         </div>
     </form>
+    @include('auth.akun-uji')
 </x-guest-layout>

@@ -93,18 +93,18 @@ class ProjectDatabaseTest extends TestCase
         $this->assertArrayNotHasKey('api_key_secure', $project->fresh()->toArray());
     }
 
-    public function test_seeder_membuat_15_mahasiswa_akun_demo_dan_aman_dijalankan_ulang(): void
+    public function test_seeder_membuat_data_awal_dan_aman_dijalankan_ulang(): void
     {
         $this->seed();
 
         $this->assertDatabaseHas('users', ['email' => 'dosenpbkk@its.ac.id']);
         $this->assertSame(15, User::where('email', 'like', '%@student.its.ac.id')->count());
-        $this->assertSame(16, User::count());
+        $this->assertSame(18, User::count()); // 15 mahasiswa + dosen + admin + staf
         $this->assertSame(33, Project::count()); // 15 x 2 project + 3 project demo
 
         $this->seed(); // dijalankan lagi: tidak boleh error duplikasi
 
-        $this->assertSame(16, User::count());
+        $this->assertSame(18, User::count());
         $this->assertSame(33, Project::count());
     }
 }

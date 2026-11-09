@@ -13,15 +13,19 @@ class DatabaseSeeder extends Seeder
 
     /**
      * Aman dijalankan berulang: data yang sudah ada dilewati sehingga tidak terjadi error duplikasi email.
+     * Semua akun memakai password: password
      */
     public function run(): void
     {
+        $this->call(RolePermissionSeeder::class); // peran harus ada sebelum diberikan ke user
+
         $this->seedMahasiswa();
         $this->seedAkunDemo();
+        $this->seedAkunUjiRbac();
     }
 
     /**
-     * 15 mahasiswa acak, masing-masing memiliki 2 project dummy.
+     * 15 mahasiswa acak tanpa peran, masing-masing memiliki 2 project dummy.
      */
     private function seedMahasiswa(): void
     {
@@ -39,40 +43,64 @@ class DatabaseSeeder extends Seeder
     }
 
     /**
-     * Akun penguji untuk demo: dosenpbkk@its.ac.id (password: password) dengan 3 project siap presentasi.
+     * Akun dosen penguji dari Tugas 6 (3 project siap presentasi), kini berperan Admin.
      */
     private function seedAkunDemo(): void
     {
-        if (User::where('email', self::EMAIL_DEMO)->exists()) {
-            return;
+        $dosen = User::where('email', self::EMAIL_DEMO)->first();
+
+        if (! $dosen) {
+            $dosen = User::factory()->create([
+                'name' => 'Dosen PBKK',
+                'email' => self::EMAIL_DEMO,
+                'password' => Hash::make('password'),
+            ]);
+
+            $proyekDemo = [
+                [
+                    'judul' => 'Agen Peninjau Jurnal Otomatis',
+                    'deskripsi' => 'Agen yang membaca kumpulan jurnal, mengekstrak metode dan hasil, lalu menyusun matriks perbandingan untuk tinjauan pustaka.',
+                    'tema_agent' => 'Ollama',
+                ],
+                [
+                    'judul' => 'Planner Studi Adaptif Mahasiswa Informatika',
+                    'deskripsi' => 'Agen perencana yang menyusun jadwal belajar mingguan dari tenggat tugas dan menyesuaikannya saat progres berubah.',
+                    'tema_agent' => 'LangChain',
+                ],
+                [
+                    'judul' => 'Asisten Debugging Praktikum Basis Data',
+                    'deskripsi' => 'Agen yang menjalankan kueri mahasiswa pada basis data sampel, membandingkan hasilnya, dan menjelaskan penyebab kesalahan.',
+                    'tema_agent' => 'CrewAI',
+                ],
+            ];
+
+            foreach ($proyekDemo as $proyek) {
+                Project::factory()->for($dosen)->create($proyek);
+            }
         }
 
-        $dosen = User::factory()->create([
-            'name' => 'Dosen PBKK',
-            'email' => self::EMAIL_DEMO,
-            'password' => Hash::make('password'),
-        ]);
+        $dosen->assignRole('Admin');
+    }
 
-        $proyekDemo = [
-            [
-                'judul' => 'Agen Peninjau Jurnal Otomatis',
-                'deskripsi' => 'Agen yang membaca kumpulan jurnal, mengekstrak metode dan hasil, lalu menyusun matriks perbandingan untuk tinjauan pustaka.',
-                'tema_agent' => 'Ollama',
-            ],
-            [
-                'judul' => 'Planner Studi Adaptif Mahasiswa Informatika',
-                'deskripsi' => 'Agen perencana yang menyusun jadwal belajar mingguan dari tenggat tugas dan menyesuaikannya saat progres berubah.',
-                'tema_agent' => 'LangChain',
-            ],
-            [
-                'judul' => 'Asisten Debugging Praktikum Basis Data',
-                'deskripsi' => 'Agen yang menjalankan kueri mahasiswa pada basis data sampel, membandingkan hasilnya, dan menjelaskan penyebab kesalahan.',
-                'tema_agent' => 'CrewAI',
-            ],
+    /**
+     * Akun uji RBAC untuk demo: satu Admin dan satu Staf.
+     */
+    private function seedAkunUjiRbac(): void
+    {
+        $akunUji = [
+            ['name' => 'Admin Portal', 'email' => 'admin@its.ac.id', 'role' => 'Admin'],
+            ['name' => 'Staf Portal', 'email' => 'staf@its.ac.id', 'role' => 'Staf'],
         ];
 
-        foreach ($proyekDemo as $proyek) {
-            Project::factory()->for($dosen)->create($proyek);
+        foreach ($akunUji as $akun) {
+            $user = User::where('email', $akun['email'])->first()
+                ?? User::factory()->create([
+                    'name' => $akun['name'],
+                    'email' => $akun['email'],
+                    'password' => Hash::make('password'),
+                ]);
+
+            $user->assignRole($akun['role']);
         }
     }
 }
